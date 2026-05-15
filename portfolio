@@ -94,6 +94,7 @@
         #about > .max-w-7xl { position: relative; z-index: 10; }
         .home-portrait { max-height: 68vh; min-height: 28rem; }
         .about-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; }
+        .about-title { white-space: nowrap; }
         .timeline-controls { display: flex; align-items: flex-start; gap: 0.75rem; }
         .timeline-control-group { text-align: center; }
         .timeline-arrow {
@@ -303,9 +304,9 @@
         </div>
         <div class="max-w-7xl mx-auto">
             <div class="about-heading">
-                <div class="max-w-4xl">
+                <div class="flex-1 min-w-0">
                     <p class="text-sm uppercase tracking-[0.2em] text-gray-400 font-medium mb-5" data-i18n="about.label">About</p>
-                    <h2 class="text-4xl serif italic mb-8" data-i18n="about.title">我是一名关注用户体验、智能系统与视觉叙事的设计师。</h2>
+                    <h2 class="about-title text-4xl serif italic mb-8" data-i18n="about.title">我是一名关注用户体验、智能系统与视觉叙事的设计师。</h2>
                     <div class="space-y-4 text-lg font-light text-gray-600 leading-relaxed">
                         <p data-i18n="about.body">她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。她的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。</p>
                     </div>
