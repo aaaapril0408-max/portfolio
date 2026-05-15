@@ -308,7 +308,8 @@
                     <p class="text-sm uppercase tracking-[0.2em] text-gray-400 font-medium mb-5" data-i18n="about.label">About</p>
                     <h2 class="about-title text-4xl serif italic mb-8" data-i18n="about.title">我是一名关注用户体验、智能系统与视觉叙事的设计师。</h2>
                     <div class="space-y-4 text-lg font-light text-gray-600 leading-relaxed">
-                        <p data-i18n="about.body">她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。她的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。</p>
+                        <p data-i18n="about.body">她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。</p>
+                        <p data-i18n="about.practice">我的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。</p>
                     </div>
                 </div>
                 <div class="timeline-controls" aria-label="Timeline controls">
@@ -514,7 +515,8 @@
                 'illustration.one.desc': '以亲和、轻盈的图形语言构建角色、图标和叙事画面。',
                 'about.label': '关于',
                 'about.title': '我是一名关注用户体验、智能系统与视觉叙事的设计师。',
-                'about.body': '她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。她的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。',
+                'about.body': '她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。',
+                'about.practice': '我的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。',
                 'timeline.ual.title': '伦敦艺术大学 · 英国伦敦',
                 'timeline.ual.role': '用户体验 · 本科 · GPA 3.59',
                 'timeline.ual.period': '2021.9月 - 2024',
@@ -584,7 +586,8 @@
                 'illustration.one.desc': 'Friendly, lightweight visual language for characters, icons, and narrative scenes.',
                 'about.label': 'About',
                 'about.title': "I'm a designer focused on user experience, smart systems, and visual storytelling.",
-                'about.body': 'She studied User Experience Design at University of the Arts London and is currently continuing her research in Intelligent Systems Design at The Hong Kong Polytechnic University. Her practice spans UX/UI, brand visuals, interaction design, and child-friendly product experiences.',
+                'about.body': 'I studied User Experience Design at University of the Arts London and am currently continuing my research in Intelligent Systems Design at The Hong Kong Polytechnic University.',
+                'about.practice': 'My practice spans UX/UI, brand visuals, interaction design, and child-friendly product experiences.',
                 'timeline.ual.title': 'University of the Arts London · London, UK',
                 'timeline.ual.role': 'User Experience · BA · GPA 3.59',
                 'timeline.ual.period': 'Sep 2021 - 2024',
