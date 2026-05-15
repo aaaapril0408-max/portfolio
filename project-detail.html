@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail | Project Title One</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #111111; scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .nav-link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #666666; transition: color 0.3s ease; }
+        .nav-link:hover { color: #111111; }
+        .section-padding { padding-top: 6rem; padding-bottom: 6rem; }
+        .image-reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s ease, transform 0.9s ease; }
+        .image-reveal.is-visible { opacity: 1; transform: translateY(0); }
+        .project-gallery { display: flex; flex-direction: column; gap: 4rem; }
+        .bottom-nav { padding: 7rem 0 6rem; }
+        .nav-arrow {
+            width: 3.25rem;
+            height: 3.25rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+            transition: background-color 0.25s ease, transform 0.25s ease;
+        }
+        .nav-arrow:hover { background-color: #f5f5f5; transform: translateY(-2px); }
+        .nav-arrow.is-disabled { color: #c7c7c7; background: #f7f7f7; cursor: default; opacity: 0.72; }
+        .nav-arrow.is-disabled:hover { transform: none; }
+        .boundary-message { display: none; }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
+            <a href="index.html" class="text-lg font-medium tracking-tighter">Back to Portfolio</a>
+            <a href="index.html" class="nav-link">Home</a>
+        </div>
+    </nav>
+
+    <main class="pt-28 px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12">
+                <p class="text-sm uppercase tracking-[0.2em] text-gray-400 font-medium">Project Detail</p>
+                <h1 class="text-5xl md:text-6xl serif italic mt-5">Cozyla Calendar+ & Mobile App</h1>
+                <p class="text-lg text-gray-600 mt-4 max-w-3xl">A family scheduling experience designed to help parents and children manage routines, tasks, and shared moments with simplicity and delight.</p>
+            </div>
+
+            <div class="space-y-10">
+                <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                    <img src="Project1%20cozyla%20calendar/0.png" alt="Cozyla Calendar cover" class="w-full h-full object-cover" />
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="space-y-3">
+                        <h2 class="text-sm uppercase tracking-[0.24em] text-gray-400 font-medium">Role</h2>
+                        <p class="text-lg text-gray-700">UX/UI Designer</p>
+                    </div>
+                    <div class="space-y-3">
+                        <h2 class="text-sm uppercase tracking-[0.24em] text-gray-400 font-medium">Timeline</h2>
+                        <p class="text-lg text-gray-700">Jan 2026 — Apr 2026</p>
+                    </div>
+                    <div class="space-y-3">
+                        <h2 class="text-sm uppercase tracking-[0.24em] text-gray-400 font-medium">Contribution</h2>
+                        <p class="text-lg text-gray-700">Research, interaction design, visual system, prototype.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 text-gray-600 leading-relaxed">
+                    <p>This project explores a calm, family-friendly interface for shared schedules, quick task handoff, and household routines. It prioritizes clarity for both adults and children through color-coded workflows, simple task cards, and a visually warm layout.</p>
+                    <p>The mobile app concept includes a daily agenda, rewards system, and easy access to family tasks. It is designed to feel familiar yet refreshing for families managing multiple activities together.</p>
+                </div>
+
+                <div class="pt-16">
+                    <h2 class="text-2xl serif italic mb-8">Project Gallery</h2>
+                    <div class="project-gallery">
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/1.png" alt="Cozyla Calendar image 1" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/2.png" alt="Cozyla Calendar image 2" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/3.png" alt="Cozyla Calendar image 3" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/4.png" alt="Cozyla Calendar image 4" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/5.png" alt="Cozyla Calendar image 5" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/6.png" alt="Cozyla Calendar image 6" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/7.png" alt="Cozyla Calendar image 7" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/8.png" alt="Cozyla Calendar image 8" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/9.png" alt="Cozyla Calendar image 9" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/10.png" alt="Cozyla Calendar image 10" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/11.png" alt="Cozyla Calendar image 11" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/12.png" alt="Cozyla Calendar image 12" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/13.png" alt="Cozyla Calendar image 13" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/14.png" alt="Cozyla Calendar image 14" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/15.png" alt="Cozyla Calendar image 15" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/16.png" alt="Cozyla Calendar image 16" class="w-full h-full object-cover" />
+                        </div>
+                        <div class="aspect-[16/9] bg-gray-200 rounded-3xl overflow-hidden image-reveal">
+                            <img src="Project1%20cozyla%20calendar/17.png" alt="Cozyla Calendar image 17" class="w-full h-full object-cover" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="bottom-nav">
+                <div class="grid grid-cols-3 items-start text-center">
+                    <div>
+                        <button type="button" class="nav-arrow project-nav is-disabled" aria-label="Previous project">←</button>
+                        <p class="boundary-message"></p>
+                    </div>
+                    <div>
+                        <button type="button" class="nav-arrow" data-scroll-top aria-label="Back to top">↑</button>
+                    </div>
+                    <div>
+                        <button type="button" class="nav-arrow project-nav" data-target="project2-detail.html" aria-label="Next project">→</button>
+                        <p class="boundary-message"></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script>
+        const detailTranslations = {
+            zh: {
+                title: '项目详情 | Cozyla Calendar+ 与移动端 App',
+                back: '返回作品集',
+                home: '首页',
+                label: '项目详情',
+                projectTitle: 'Cozyla Calendar+ 与移动端 App',
+                intro: '这是一个面向家庭日程协作的体验设计，帮助父母和孩子以更简单、愉悦的方式管理日常安排、任务和共享时刻。',
+                roleLabel: '角色',
+                role: 'UX/UI 设计师',
+                timelineLabel: '周期',
+                timeline: '2026.1月 - 2026.4月',
+                contributionLabel: '负责内容',
+                contribution: '用户研究、交互设计、视觉系统、原型设计。',
+                bodyOne: '这个项目探索了一套平静、友好的家庭界面，用于共享日程、快速分配任务和管理家庭日常。它通过色彩编码的流程、简洁的任务卡片和温暖的视觉布局，让成人与儿童都能清晰理解并轻松使用。',
+                bodyTwo: '移动端概念包含每日议程、奖励系统以及家庭任务入口。整体体验希望在熟悉的使用方式中加入新鲜感，帮助家庭更自然地协同安排多项活动。',
+                gallery: '项目图片',
+                prevLabel: '上一个项目',
+                topLabel: '返回顶部',
+                nextLabel: '下一个项目'
+            },
+            en: {
+                title: 'Project Detail | Cozyla Calendar+ & Mobile App',
+                back: 'Back to Portfolio',
+                home: 'Home',
+                label: 'Project Detail',
+                projectTitle: 'Cozyla Calendar+ & Mobile App',
+                intro: 'A family scheduling experience designed to help parents and children manage routines, tasks, and shared moments with simplicity and delight.',
+                roleLabel: 'Role',
+                role: 'UX/UI Designer',
+                timelineLabel: 'Timeline',
+                timeline: 'Jan 2026 - Apr 2026',
+                contributionLabel: 'Contribution',
+                contribution: 'Research, interaction design, visual system, prototype.',
+                bodyOne: 'This project explores a calm, family-friendly interface for shared schedules, quick task handoff, and household routines. It prioritizes clarity for both adults and children through color-coded workflows, simple task cards, and a visually warm layout.',
+                bodyTwo: 'The mobile app concept includes a daily agenda, rewards system, and easy access to family tasks. It is designed to feel familiar yet refreshing for families managing multiple activities together.',
+                gallery: 'Project Gallery',
+                prevLabel: 'Previous project',
+                topLabel: 'Back to top',
+                nextLabel: 'Next project'
+            }
+        };
+
+        const getDetailLanguage = () => {
+            const urlLanguage = new URLSearchParams(window.location.search).get('lang');
+            if (urlLanguage === 'en' || urlLanguage === 'zh') return urlLanguage;
+            return localStorage.getItem('portfolio-language') || 'zh';
+        };
+
+        const setupDetailLanguage = () => {
+            const language = getDetailLanguage();
+            const text = detailTranslations[language];
+            const navLinks = document.querySelectorAll('nav a');
+            const header = document.querySelector('.mb-12');
+            const metaItems = document.querySelectorAll('main .grid > .space-y-3');
+            const bodyParagraphs = document.querySelectorAll('.space-y-6.text-gray-600 p');
+            const galleryHeading = document.querySelector('.pt-16 h2');
+            const topButton = document.querySelector('[data-scroll-top]');
+            const projectButtons = document.querySelectorAll('.project-nav');
+
+            document.title = text.title;
+            document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+            localStorage.setItem('portfolio-language', language);
+
+            navLinks.forEach((link, index) => {
+                link.textContent = index === 0 ? text.back : text.home;
+                link.href = index === 0 ? `index.html?lang=${language}#design` : `index.html?lang=${language}#home`;
+            });
+
+            if (header) {
+                header.querySelector('p').textContent = text.label;
+                header.querySelector('h1').textContent = text.projectTitle;
+                header.querySelector('p.text-lg').textContent = text.intro;
+            }
+
+            const metaText = [
+                [text.roleLabel, text.role],
+                [text.timelineLabel, text.timeline],
+                [text.contributionLabel, text.contribution]
+            ];
+            metaItems.forEach((item, index) => {
+                item.querySelector('h2').textContent = metaText[index][0];
+                item.querySelector('p').textContent = metaText[index][1];
+            });
+
+            if (bodyParagraphs[0]) bodyParagraphs[0].textContent = text.bodyOne;
+            if (bodyParagraphs[1]) bodyParagraphs[1].textContent = text.bodyTwo;
+            if (galleryHeading) galleryHeading.textContent = text.gallery;
+            if (topButton) topButton.setAttribute('aria-label', text.topLabel);
+            projectButtons.forEach((button, index) => button.setAttribute('aria-label', index === 0 ? text.prevLabel : text.nextLabel));
+        };
+
+        setupDetailLanguage();
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.18 });
+
+        document.querySelectorAll('.image-reveal').forEach((image) => revealObserver.observe(image));
+
+        document.querySelector('[data-scroll-top]').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('.project-nav').forEach((button) => {
+            button.addEventListener('click', () => {
+                const target = button.dataset.target;
+                if (target) {
+                    const url = new URL(target, window.location.href);
+                    url.searchParams.set('lang', getDetailLanguage());
+                    window.location.href = `${url.pathname.split('/').pop()}${url.search}`;
+                    return;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

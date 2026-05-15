@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio | Elizabeth Lin Style</title>
+    <script>
+        const portfolioNavigation = performance.getEntriesByType('navigation')[0];
+        window.__portfolioIsReload = portfolioNavigation ? portfolioNavigation.type === 'reload' : performance.navigation?.type === 1;
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        if (window.__portfolioIsReload) {
+            window.scrollTo(0, 0);
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #ffffff; --text-main: #111111; --text-muted: #666666; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-main); scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .nav-link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--text-main); }
+        .language-toggle { display: flex; align-items: center; gap: 0.25rem; padding: 0.2rem; border: 1px solid rgba(17, 17, 17, 0.08); border-radius: 9999px; background: rgba(255, 255, 255, 0.18); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .language-toggle button { min-width: 2.25rem; padding: 0.35rem 0.65rem; border: 1px solid transparent; border-radius: 9999px; font-size: 0.7rem; letter-spacing: 0.08em; color: #9ca3af; background: transparent; transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+        .language-toggle button.is-active { background: rgba(255, 255, 255, 0.86); border-color: rgba(17, 17, 17, 0.16); color: var(--text-main); }
+        .project-card { transition: opacity 0.4s ease; cursor: pointer; }
+        .project-card:hover { opacity: 0.8; }
+        .project-cover,
+        .project-cover img {
+            cursor: none !important;
+        }
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 36px;
+            padding: 0 14px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            border-radius: 9999px;
+            color: #111111;
+            font-size: 0.85rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            letter-spacing: 0.05em;
+            text-transform: none;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        .custom-cursor::before {
+            content: "LET'S GO";
+        }
+        .page-reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s ease, transform 0.9s ease; }
+        .page-reveal.is-visible { opacity: 1; transform: translateY(0); }
+        .hero-title { font-family: 'Songti SC', 'STSong', 'SimSun', serif; font-style: italic; font-weight: 200; line-height: 1.22; color: var(--text-main); }
+        html[lang="en"] .hero-title { font-family: 'Playfair Display', serif; font-weight: 400; }
+        .hero-title-line { display: block; }
+        .hero-title-line + .hero-title-line { margin-top: 0.22em; }
+        .hero-title-sub { font-size: 0.66em; }
+        .section-padding { padding-top: 8rem; padding-bottom: 8rem; }
+
+        /* Floating Orbs Background */
+        .orbs-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; transition: transform 0.1s ease-out; }
+        .orb-blue { background: radial-gradient(circle, rgba(59, 130, 246, 0.8) 0%, rgba(59, 130, 246, 0) 70%); }
+        .orb-orange { background: radial-gradient(circle, rgba(251, 146, 60, 0.8) 0%, rgba(251, 146, 60, 0) 70%); }
+
+        @keyframes float1 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(80px, -120px); } 66% { transform: translate(-100px, 80px); } }
+        @keyframes float2 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-100px, 100px); } 66% { transform: translate(120px, -80px); } }
+        @keyframes float3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(60px, 90px); } 66% { transform: translate(-90px, -60px); } }
+
+        .orb-1 { animation: float1 15s ease-in-out infinite; }
+        .orb-2 { animation: float2 18s ease-in-out infinite; }
+        .orb-3 { animation: float3 20s ease-in-out infinite; }
+
+        #home,
+        #design,
+        #about { position: relative; overflow: hidden; }
+        #home > .orbs-container,
+        #design > .orbs-container,
+        #about > .orbs-container { z-index: 0; }
+        #home > .home-inner,
+        #design > .max-w-7xl,
+        #about > .max-w-7xl { position: relative; z-index: 10; }
+        .home-portrait { max-height: 68vh; min-height: 28rem; }
+        .about-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; }
+        .timeline-controls { display: flex; align-items: flex-start; gap: 0.75rem; }
+        .timeline-control-group { text-align: center; }
+        .timeline-arrow {
+            width: 2.65rem;
+            height: 2.65rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+            transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+        }
+        .timeline-arrow:hover { background-color: #f5f5f5; transform: translateY(-2px); }
+        .timeline-arrow.is-disabled { color: #c7c7c7; background: #f7f7f7; cursor: default; opacity: 0.72; }
+        .timeline-arrow.is-disabled:hover { transform: none; }
+        .timeline-message { display: none; }
+        #about { padding-top: 5rem; padding-bottom: 4rem; }
+        .timeline-shell { position: relative; margin-top: 1.5rem; margin-right: calc(50% - 50vw); }
+        .timeline-auto-zone { position: absolute; top: -3rem; width: 8rem; height: calc(100% + 3rem); z-index: 11; }
+        .timeline-auto-zone.is-left { left: calc(50% - 50vw); width: calc(8rem + 50vw - 50%); }
+        .timeline-auto-zone.is-right { right: 0; }
+        .timeline { position: relative; overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0 1rem; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 14rem), transparent 100%); mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 14rem), transparent 100%); }
+        .timeline::-webkit-scrollbar { display: none; }
+        .timeline-track { position: relative; display: grid; grid-template-columns: repeat(8, minmax(250px, 1fr)); min-width: 2100px; min-height: 300px; align-items: stretch; }
+        .timeline-track::before { content: ""; position: absolute; left: 0; right: 0; top: 6.65rem; height: 1px; background: #d1d5db; }
+        .timeline-item { position: relative; padding: 0 1.25rem; transform-origin: top center; transition: opacity 0.35s ease, transform 0.35s ease; }
+        .timeline-item::before { content: ""; position: absolute; left: 1.25rem; top: 5.5rem; width: 1px; height: 5.25rem; background: #d1d5db; }
+        .timeline-item::after { content: ""; position: absolute; left: 1.25rem; top: 7.7rem; width: 1px; height: 2rem; background: repeating-linear-gradient(to bottom, #d1d5db 0 8px, transparent 8px 14px); }
+        .timeline-content { position: relative; max-width: 240px; padding-top: 8.25rem; padding-left: 1.15rem; }
+        .timeline:hover .timeline-item { opacity: 0.25; }
+        .timeline .timeline-item:hover { opacity: 1; transform: scale(1.08); z-index: 5; }
+        .timeline-date { position: absolute; top: 1.8rem; left: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 3.25rem; line-height: 1; letter-spacing: 0; color: #b8bdc5; margin-bottom: 0; font-weight: 400; }
+        .timeline-date.is-empty { visibility: hidden; }
+        .timeline-title { font-size: 0.9rem; line-height: 1.4; font-weight: 500; color: #111111; }
+        .timeline-role { margin-top: 0.2rem; color: #777777; font-size: 0.76rem; line-height: 1.5; font-weight: 300; }
+        .timeline-period { margin-top: 0.15rem; color: #9ca3af; font-size: 0.7rem; line-height: 1.5; font-weight: 300; }
+        .timeline-detail { margin-top: 2.05rem; color: #666666; font-size: 0.7rem; line-height: 1.6; font-weight: 300; }
+        .copy-toast { position: fixed; left: 50%; bottom: 2rem; transform: translate(-50%, 1rem); opacity: 0; pointer-events: none; padding: 0.7rem 1rem; border: 1px solid #eeeeee; border-radius: 9999px; background: rgba(255, 255, 255, 0.9); color: #111111; font-size: 0.8rem; letter-spacing: 0.08em; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 10000; }
+        .copy-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center">
+            <a href="#home" class="text-lg font-medium tracking-tighter">Zhai Yuxi · April</a>
+            <div class="flex items-center space-x-10">
+                <div class="flex space-x-10">
+                    <a href="#home" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="#design" class="nav-link" data-i18n="nav.design">Design</a>
+                </div>
+                <div class="language-toggle" aria-label="Language switcher">
+                    <button type="button" class="is-active" aria-pressed="true" data-lang="zh">中</button>
+                    <button type="button" aria-pressed="false" data-lang="en">EN</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center px-8 pt-28 pb-16">
+        <div class="orbs-container">
+            <div class="orb orb-blue orb-1" style="width: 300px; height: 300px; top: 10%; left: 5%;"></div>
+            <div class="orb orb-orange orb-2" style="width: 250px; height: 250px; top: 50%; right: 10%;"></div>
+            <div class="orb orb-blue orb-3" style="width: 280px; height: 280px; bottom: 10%; left: 30%;"></div>
+        </div>
+        <div class="home-inner max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5">
+                <div class="home-portrait aspect-[3/4] bg-gray-100 overflow-hidden rounded-xl grayscale hover:grayscale-0 transition duration-700">
+                    <img src="4c4120a4f2425d5ddb19742e5865b08b.JPG" alt="Portrait of Zhao Yuxi" class="w-full h-full object-cover" />
+                </div>
+            </div>
+            <div class="md:col-span-7 text-left">
+                <h1 class="hero-title text-7xl md:text-9xl mb-10">
+                    <span data-i18n-html="hero.title"><span class="hero-title-line">嗨 ; )</span><span class="hero-title-line hero-title-sub">我是禹喜，</span><span class="hero-title-line hero-title-sub">一名设计师</span></span>
+                </h1>
+                <p class="text-xl md:text-2xl font-light text-gray-500 leading-relaxed max-w-2xl">
+                    <span data-i18n="hero.body">This is where you place your core positioning statement. Focus on high-level impact and the unique intersection of your skills.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="design" class="section-padding px-8">
+        <div class="orbs-container">
+            <div class="orb orb-orange orb-1" style="width: 320px; height: 320px; top: 5%; left: 8%;"></div>
+            <div class="orb orb-blue orb-2" style="width: 280px; height: 280px; top: 34%; right: 4%;"></div>
+            <div class="orb orb-orange orb-3" style="width: 300px; height: 300px; bottom: 8%; left: 42%;"></div>
+        </div>
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-16">
+                <h2 class="text-sm uppercase tracking-[0.2em] text-gray-400 font-medium" data-i18n="works.heading">Selected Works</h2>
+            </div>
+            
+            <div class="space-y-28">
+                <div>
+                    <h3 class="text-xs uppercase tracking-[0.22em] text-gray-400 font-medium mb-10" data-i18n="works.category.ui">UI&UX 设计</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-20">
+                
+                        <a href="project-detail.html" class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-200 project-cover">
+                                <img src="Project1%20cozyla%20calendar/cover.png" alt="Cozyla Calendar cover" class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="project.one.title">Project Title One</h3>
+                                <p class="text-gray-500 font-light" data-i18n="project.one.desc">Short description of the impact and role.</p>
+                            </div>
+                        </a>
+
+                        <a href="project2-detail.html" class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-200 project-cover">
+                                <img src="Project2%20Cozyla%20APP/cover.png" alt="Cozyla App cover" class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="project.two.title">Project Title Two</h3>
+                                <p class="text-gray-500 font-light" data-i18n="project.two.desc">Short description of the impact and role.</p>
+                            </div>
+                        </a>
+
+                        <a href="project3-detail.html" class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-200 project-cover">
+                                <img src="Project3%20wix/cover.png" alt="Wix project cover" class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="project.three.title">Project Title Three</h3>
+                                <p class="text-gray-500 font-light" data-i18n="project.three.desc">Short description of the impact and role.</p>
+                            </div>
+                        </a>
+
+                        <a href="project4-detail.html" class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-200 project-cover">
+                                <img src="Project4%20trip/cover.png" alt="Trip project cover" class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="project.four.title">Project Title Four</h3>
+                                <p class="text-gray-500 font-light" data-i18n="project.four.desc">Short description of the impact and role.</p>
+                            </div>
+                        </a>
+
+                        <a href="project5-detail.html" class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-200 project-cover">
+                                <img src="Project5%20chew/cover.png" alt="Chew project cover" class="w-full h-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="project.five.title">Chew 体验设计</h3>
+                                <p class="text-gray-500 font-light" data-i18n="project.five.desc">围绕饮食体验与产品服务流程的 UX/UI 探索。</p>
+                            </div>
+                        </a>
+
+                        <article class="space-y-6 block">
+                            <div class="aspect-[4/5] rounded-xl bg-gray-50/80 flex items-center justify-center">
+                                <p class="serif italic text-2xl font-light text-gray-400" data-i18n="project.placeholder.title">未完待续 ...</p>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+
+                <div hidden>
+                    <h3 class="text-xs uppercase tracking-[0.22em] text-gray-400 font-medium mb-10" data-i18n="works.category.brand">品牌&商业设计</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-20">
+                        <article class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-100">
+                                <img src="crown.png" alt="Brand design cover" class="w-full h-full object-contain p-16 transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="brand.one.title">品牌视觉系统</h3>
+                                <p class="text-gray-500 font-light" data-i18n="brand.one.desc">围绕商业场景的品牌识别、视觉资产与传播设计。</p>
+                            </div>
+                        </article>
+                        <article class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-100">
+                                <img src="crown.png" alt="Brand design placeholder" class="w-full h-full object-contain p-16 transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="brand.two.title">商业视觉设计</h3>
+                                <p class="text-gray-500 font-light" data-i18n="brand.two.desc">面向活动、宣传与商业传播的视觉设计占位项目。</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div hidden>
+                    <h3 class="text-xs uppercase tracking-[0.22em] text-gray-400 font-medium mb-10" data-i18n="works.category.illustration">插画</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-20">
+                        <article class="project-card space-y-6 block group">
+                            <div class="aspect-[4/5] overflow-hidden rounded-xl bg-gray-100">
+                                <img src="lets%20go.png" alt="Illustration cover" class="w-full h-full object-contain p-16 transition duration-500 group-hover:scale-[1.02]" />
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-medium" data-i18n="illustration.one.title">角色与视觉插画</h3>
+                                <p class="text-gray-500 font-light" data-i18n="illustration.one.desc">以亲和、轻盈的图形语言构建角色、图标和叙事画面。</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding px-8">
+        <div class="orbs-container">
+            <div class="orb orb-orange orb-1" style="width: 320px; height: 320px; top: 5%; left: 10%;"></div>
+            <div class="orb orb-blue orb-2" style="width: 270px; height: 270px; top: 40%; right: 5%;"></div>
+            <div class="orb orb-orange orb-3" style="width: 300px; height: 300px; bottom: 5%; left: 40%;"></div>
+        </div>
+        <div class="max-w-7xl mx-auto">
+            <div class="about-heading">
+                <div class="max-w-4xl">
+                    <p class="text-sm uppercase tracking-[0.2em] text-gray-400 font-medium mb-5" data-i18n="about.label">About</p>
+                    <h2 class="text-4xl serif italic mb-8" data-i18n="about.title">我是一名关注用户体验、智能系统与视觉叙事的设计师。</h2>
+                    <div class="space-y-4 text-lg font-light text-gray-600 leading-relaxed">
+                        <p data-i18n="about.body">她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。她的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。</p>
+                    </div>
+                </div>
+                <div class="timeline-controls" aria-label="Timeline controls">
+                    <div class="timeline-control-group">
+                        <button type="button" class="timeline-arrow" data-timeline-prev aria-label="Previous timeline page">←</button>
+                        <p class="timeline-message" data-timeline-prev-message></p>
+                    </div>
+                    <div class="timeline-control-group">
+                        <button type="button" class="timeline-arrow" data-timeline-next aria-label="Next timeline page">→</button>
+                        <p class="timeline-message" data-timeline-next-message></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-shell">
+                <div class="timeline-auto-zone is-left" data-timeline-auto-zone data-direction="-1"></div>
+                <div class="timeline-auto-zone is-right" data-timeline-auto-zone data-direction="1"></div>
+                <div class="timeline" data-timeline>
+                    <div class="timeline-track">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date">2021</p>
+                                <h3 class="timeline-title" data-i18n="timeline.ual.title">伦敦艺术大学 · 英国伦敦</h3>
+                                <p class="timeline-role" data-i18n="timeline.ual.role">用户体验 · 本科 · GPA 3.59</p>
+                                <p class="timeline-period" data-i18n="timeline.ual.period">2021.9月 - 2024</p>
+                                <p class="timeline-detail" data-i18n="timeline.ual.detail">系统学习用户研究、交互设计、视觉表达与数字产品体验。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date is-empty">2021</p>
+                                <h3 class="timeline-title" data-i18n="timeline.universal.title">北京环球 · 中国北京</h3>
+                                <p class="timeline-role" data-i18n="timeline.universal.role">平面设计</p>
+                                <p class="timeline-period" data-i18n="timeline.universal.period">2021.9月 - 2021.12月</p>
+                                <p class="timeline-detail" data-i18n="timeline.universal.detail">依据环球品牌标准设计园区与林荫道标识、贴纸菜单和视觉资产，并与跨职能团队协作保证媒介一致性。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date">2022</p>
+                                <h3 class="timeline-title" data-i18n="timeline.mogador.title">Mogador · 中国北京</h3>
+                                <p class="timeline-role" data-i18n="timeline.mogador.role">交互设计师</p>
+                                <p class="timeline-period" data-i18n="timeline.mogador.period">2022.12月 - 2023.3月</p>
+                                <p class="timeline-detail" data-i18n="timeline.mogador.detail">制作中国社交媒体宣传海报，重新设计产品包装，并参与分销商在线销售网站的 UI 设计。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date">2023</p>
+                                <h3 class="timeline-title" data-i18n="timeline.wix.title">WIX x 伦敦传媒 · 英国伦敦</h3>
+                                <p class="timeline-role" data-i18n="timeline.wix.role">UX/UI 设计</p>
+                                <p class="timeline-period" data-i18n="timeline.wix.period">2023.4月</p>
+                                <p class="timeline-detail" data-i18n="timeline.wix.detail">与跨专业团队完成客户项目品牌重塑和网站设计，主导三个创意方向之一，并使用 Wix 开发最终网站布局。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date">2024</p>
+                                <h3 class="timeline-title" data-i18n="timeline.jade.title">JADESTUDIO · 中国</h3>
+                                <p class="timeline-role" data-i18n="timeline.jade.role">平面设计 / 交互设计</p>
+                                <p class="timeline-period" data-i18n="timeline.jade.period">2024.7月 - 2024.9月</p>
+                                <p class="timeline-detail" data-i18n="timeline.jade.detail">共同创立设计工作室，服务国际客户，完成品牌设计、VI 海报、餐厅 Logo 与投资咨询公司品牌项目。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date is-empty">2024</p>
+                                <h3 class="timeline-title" data-i18n="timeline.lumino.title">Luminocity · 纽约 / 远程</h3>
+                                <p class="timeline-role" data-i18n="timeline.lumino.role">初级平面设计</p>
+                                <p class="timeline-period" data-i18n="timeline.lumino.period">2024.9月至今</p>
+                                <p class="timeline-detail" data-i18n="timeline.lumino.detail">为冬季灯光秀制作宣传资产、海报、公园地图和订阅者通讯，并协助纽约与新泽西大型灯光秀活动保持品牌视觉统一。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date">2025</p>
+                                <h3 class="timeline-title" data-i18n="timeline.cozyla.title">Cozyla · 北京</h3>
+                                <p class="timeline-role" data-i18n="timeline.cozyla.role">用户体验设计师</p>
+                                <p class="timeline-period" data-i18n="timeline.cozyla.period">2025.2月 - 2025.8月</p>
+                                <p class="timeline-detail" data-i18n="timeline.cozyla.detail">负责 Chores 从 1.0 到 2.0 的体验升级，优化产品逻辑与视觉效果，创作儿童友好动画，并设计移动端 APP、Calendar+ launcher 系统与新用户高亮引导。</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <p class="timeline-date is-empty">2025</p>
+                                <h3 class="timeline-title" data-i18n="timeline.polyu.title">香港理工大学 · 中国香港</h3>
+                                <p class="timeline-role" data-i18n="timeline.polyu.role">智能系统设计 · 硕士</p>
+                                <p class="timeline-period" data-i18n="timeline.polyu.period">2025.9月至今</p>
+                                <p class="timeline-detail" data-i18n="timeline.polyu.detail">继续探索智能系统、交互体验与面向未来的产品服务设计。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 flex space-x-8">
+                <a href="#" class="nav-link">Resume</a>
+                <a href="#" class="nav-link">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 px-8 text-center">
+        <h2 class="text-3xl font-light tracking-[0.16em] text-gray-400 mb-8" data-i18n="contact.heading">和我联系</h2>
+        <div class="flex justify-center space-x-14 mb-8">
+            <a href="中文简历.docx" class="nav-link" data-resume-link data-i18n="contact.resume" download="中文简历.docx">Resume</a>
+            <button type="button" class="nav-link" data-copy-email="aaaapril0408@gmail.com" data-i18n="contact.email">Email</button>
+            <button type="button" class="nav-link" data-copy-text="A3155777April_" data-i18n="contact.wechat">微信</button>
+            <a href="https://m.zhipin.com/mpa/html/resume-detail?sid=self&securityId=9ZDskJaxMvUJu-r1CrJSdesEu7koujz8Lm5qDAAj3snpWpycpnQDSF1xtxR-er2xOCGGNX3Jrte0m1jw7VMqyNu8yfe06IlyEYJgysR3gLk-k3RWI8Vk5kTnkt7GLuctaqV6T0Bz5mK94PzvwKsxt2ortsrjcP-Q3-ew" class="nav-link" data-i18n="contact.boss" target="_blank" rel="noopener noreferrer">BOSS直聘</a>
+            <a href="https://www.linkedin.com/in/%E7%A6%B9%E5%96%9C-%E8%B5%B5-393504244" class="nav-link" data-i18n="contact.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+        <p class="text-xs uppercase tracking-widest text-gray-400">&copy; 2026 Crafted with care.</p>
+    </footer>
+    <div class="copy-toast" data-copy-toast data-i18n="copy.toast">已复制成功</div>
+
+    <script>
+        // Orb mouse avoidance effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const avoidDistance = 150;
+
+            document.querySelectorAll('.orb').forEach((orb) => {
+                const rect = orb.getBoundingClientRect();
+                const orbCenterX = rect.left + rect.width / 2;
+                const orbCenterY = rect.top + rect.height / 2;
+
+                const dx = orbCenterX - mouseX;
+                const dy = orbCenterY - mouseY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < avoidDistance) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (avoidDistance - distance) / avoidDistance;
+                    const moveX = Math.cos(angle) * force * 80;
+                    const moveY = Math.sin(angle) * force * 80;
+
+                    orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } else {
+                    orb.style.transform = 'translate(0, 0)';
+                }
+            });
+        });
+
+        const pageRevealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    pageRevealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.14 });
+
+        document.querySelectorAll('#home .home-inner, #design .flex.justify-between, #design .space-y-28 > div, #about .about-heading, #about .timeline-shell, footer').forEach((element) => {
+            element.classList.add('page-reveal');
+            pageRevealObserver.observe(element);
+        });
+
+        const customCursor = document.createElement('div');
+        customCursor.className = 'custom-cursor';
+        document.body.appendChild(customCursor);
+
+        document.querySelectorAll('.project-cover').forEach((cover) => {
+            cover.addEventListener('mouseenter', () => {
+                customCursor.style.display = 'flex';
+            });
+            cover.addEventListener('mouseleave', () => {
+                customCursor.style.display = 'none';
+            });
+            cover.addEventListener('mousemove', (event) => {
+                customCursor.style.left = `${event.clientX}px`;
+                customCursor.style.top = `${event.clientY}px`;
+            });
+        });
+
+        const translations = {
+            zh: {
+                'nav.home': '首页',
+                'nav.about': '关于',
+                'nav.design': '作品',
+                'hero.title': '<span class="hero-title-line">嗨 ; )</span><span class="hero-title-line hero-title-sub">我是禹喜，</span><span class="hero-title-line hero-title-sub">一名设计师</span>',
+                'hero.body': '我关注用户体验、智能系统与视觉叙事，擅长把复杂的产品逻辑转化为清晰、温暖且可用的数字体验。',
+                'works.heading': '精选作品',
+                'works.category.ui': 'UI&UX 设计',
+                'works.category.brand': '品牌&商业设计',
+                'works.category.illustration': '插画',
+                'project.one.title': 'Cozyla Calendar+',
+                'project.one.desc': '面向家庭协作和儿童任务管理的 UX/UI 设计。',
+                'project.two.title': 'Cozyla Mobile App',
+                'project.two.desc': '支持家庭日程、任务和设备管理的移动端体验。',
+                'project.three.title': 'WIX 网站重塑',
+                'project.three.desc': '跨专业团队合作完成的品牌重塑与网站设计。',
+                'project.four.title': 'Trip 体验设计',
+                'project.four.desc': '围绕旅程规划与信息组织的体验探索。',
+                'project.five.title': 'Chew 体验设计',
+                'project.five.desc': '围绕饮食体验与产品服务流程的 UX/UI 探索。',
+                'project.placeholder.title': '未完待续 ...',
+                'brand.one.title': '品牌视觉系统',
+                'brand.one.desc': '围绕商业场景的品牌识别、视觉资产与传播设计。',
+                'brand.two.title': '商业视觉设计',
+                'brand.two.desc': '面向活动、宣传与商业传播的视觉设计占位项目。',
+                'illustration.one.title': '角色与视觉插画',
+                'illustration.one.desc': '以亲和、轻盈的图形语言构建角色、图标和叙事画面。',
+                'about.label': '关于',
+                'about.title': '我是一名关注用户体验、智能系统与视觉叙事的设计师。',
+                'about.body': '她曾在伦敦艺术大学学习用户体验设计，目前在香港理工大学继续智能系统设计方向的研究。她的实践横跨 UX/UI、品牌视觉、交互设计与儿童友好型产品体验。',
+                'timeline.ual.title': '伦敦艺术大学 · 英国伦敦',
+                'timeline.ual.role': '用户体验 · 本科 · GPA 3.59',
+                'timeline.ual.period': '2021.9月 - 2024',
+                'timeline.ual.detail': '系统学习用户研究、交互设计、视觉表达与数字产品体验。',
+                'timeline.universal.title': '北京环球 · 中国北京',
+                'timeline.universal.role': '平面设计',
+                'timeline.universal.period': '2021.9月 - 2021.12月',
+                'timeline.universal.detail': '依据环球品牌标准设计园区与林荫道标识、贴纸菜单和视觉资产，并与跨职能团队协作保证媒介一致性。',
+                'timeline.mogador.title': 'Mogador · 中国北京',
+                'timeline.mogador.role': '交互设计师',
+                'timeline.mogador.period': '2022.12月 - 2023.3月',
+                'timeline.mogador.detail': '制作中国社交媒体宣传海报，重新设计产品包装，并参与分销商在线销售网站的 UI 设计。',
+                'timeline.wix.title': 'WIX x 伦敦传媒 · 英国伦敦',
+                'timeline.wix.role': 'UX/UI 设计',
+                'timeline.wix.period': '2023.4月',
+                'timeline.wix.detail': '与跨专业团队完成客户项目品牌重塑和网站设计，主导三个创意方向之一，并使用 Wix 开发最终网站布局。',
+                'timeline.cozyla.title': 'Cozyla · 北京',
+                'timeline.cozyla.role': '用户体验设计师',
+                'timeline.cozyla.period': '2025.2月 - 2025.8月',
+                'timeline.cozyla.detail': '负责 Chores 从 1.0 到 2.0 的体验升级，优化产品逻辑与视觉效果，创作儿童友好动画，并设计移动端 APP、Calendar+ launcher 系统与新用户高亮引导。',
+                'timeline.jade.title': 'JADESTUDIO · 中国',
+                'timeline.jade.role': '平面设计 / 交互设计',
+                'timeline.jade.period': '2024.7月 - 2024.9月',
+                'timeline.jade.detail': '共同创立设计工作室，服务国际客户，完成品牌设计、VI 海报、餐厅 Logo 与投资咨询公司品牌项目。',
+                'timeline.lumino.title': 'Luminocity · 纽约 / 远程',
+                'timeline.lumino.role': '初级平面设计',
+                'timeline.lumino.period': '2024.9月至今',
+                'timeline.lumino.detail': '为冬季灯光秀制作宣传资产、海报、公园地图和订阅者通讯，并协助纽约与新泽西大型灯光秀活动保持品牌视觉统一。',
+                'timeline.polyu.title': '香港理工大学 · 中国香港',
+                'timeline.polyu.role': '智能系统设计 · 硕士',
+                'timeline.polyu.period': '2025.9月至今',
+                'timeline.polyu.detail': '继续探索智能系统、交互体验与面向未来的产品服务设计。',
+                'contact.heading': '和我联系',
+                'contact.resume': 'Resume',
+                'contact.email': 'Email',
+                'contact.wechat': '微信',
+                'contact.boss': 'BOSS直聘',
+                'contact.linkedin': 'LinkedIn',
+                'copy.toast': '已复制成功'
+            },
+            en: {
+                'nav.home': 'Home',
+                'nav.about': 'About',
+                'nav.design': 'Design',
+                'hero.title': "<span class=\"hero-title-line\">Hi ; )</span><span class=\"hero-title-line hero-title-sub\">I'm Yuxi,</span><span class=\"hero-title-line hero-title-sub\">a designer.</span>",
+                'hero.body': 'I design user experiences, smart systems, and visual narratives that turn complex product logic into clear, warm, usable digital experiences.',
+                'works.heading': 'Selected Works',
+                'works.category.ui': 'UI&UX Design',
+                'works.category.brand': 'Brand & Commercial Design',
+                'works.category.illustration': 'Illustration',
+                'project.one.title': 'Cozyla Calendar+',
+                'project.one.desc': 'UX/UI design for family coordination and child-friendly task management.',
+                'project.two.title': 'Cozyla Mobile App',
+                'project.two.desc': 'A mobile experience for family schedules, tasks, and connected devices.',
+                'project.three.title': 'WIX Website Redesign',
+                'project.three.desc': 'Brand refresh and website design created with a cross-disciplinary team.',
+                'project.four.title': 'Trip Experience Design',
+                'project.four.desc': 'An experience design exploration around trip planning and information structure.',
+                'project.five.title': 'Chew Experience Design',
+                'project.five.desc': 'A UX/UI exploration around food experiences and product-service flows.',
+                'project.placeholder.title': 'To be continued ...',
+                'brand.one.title': 'Brand Visual System',
+                'brand.one.desc': 'Brand identity, visual assets, and communication design for commercial contexts.',
+                'brand.two.title': 'Commercial Visual Design',
+                'brand.two.desc': 'A placeholder project for campaign, promotion, and commercial communication design.',
+                'illustration.one.title': 'Character & Visual Illustration',
+                'illustration.one.desc': 'Friendly, lightweight visual language for characters, icons, and narrative scenes.',
+                'about.label': 'About',
+                'about.title': "I'm a designer focused on user experience, smart systems, and visual storytelling.",
+                'about.body': 'She studied User Experience Design at University of the Arts London and is currently continuing her research in Intelligent Systems Design at The Hong Kong Polytechnic University. Her practice spans UX/UI, brand visuals, interaction design, and child-friendly product experiences.',
+                'timeline.ual.title': 'University of the Arts London · London, UK',
+                'timeline.ual.role': 'User Experience · BA · GPA 3.59',
+                'timeline.ual.period': 'Sep 2021 - 2024',
+                'timeline.ual.detail': 'Studied user research, interaction design, visual communication, and digital product experience.',
+                'timeline.universal.title': 'Universal Beijing · Beijing, China',
+                'timeline.universal.role': 'Graphic Designer',
+                'timeline.universal.period': 'Sep 2021 - Dec 2021',
+                'timeline.universal.detail': 'Designed signage, sticker menus, and visual assets following Universal brand standards.',
+                'timeline.mogador.title': 'Mogador · Beijing, China',
+                'timeline.mogador.role': 'Interaction Designer',
+                'timeline.mogador.period': 'Dec 2022 - Mar 2023',
+                'timeline.mogador.detail': 'Created social media posters, redesigned packaging, and supported UI design for an online distributor website.',
+                'timeline.wix.title': 'WIX x LCC · London, UK',
+                'timeline.wix.role': 'UX/UI Design',
+                'timeline.wix.period': 'Apr 2023',
+                'timeline.wix.detail': 'Collaborated on a client rebrand and website design, leading one creative direction and building the final layout in Wix.',
+                'timeline.cozyla.title': 'Cozyla · Beijing',
+                'timeline.cozyla.role': 'User Experience Designer',
+                'timeline.cozyla.period': 'Feb 2025 - Aug 2025',
+                'timeline.cozyla.detail': 'Upgraded Chores from 1.0 to 2.0, improved product logic and visuals, created child-friendly animations, and designed the mobile app and Calendar+ launcher.',
+                'timeline.jade.title': 'JADESTUDIO · China',
+                'timeline.jade.role': 'Graphic / Interaction Design',
+                'timeline.jade.period': 'Jul 2024 - Sep 2024',
+                'timeline.jade.detail': 'Co-founded a design studio serving international clients across branding, VI posters, restaurant logos, and consulting brand systems.',
+                'timeline.lumino.title': 'Luminocity · New York / Remote',
+                'timeline.lumino.role': 'Junior Graphic Designer',
+                'timeline.lumino.period': 'Sep 2024 - Present',
+                'timeline.lumino.detail': 'Designed promotional assets, posters, park maps, and newsletters for winter light shows in New York and New Jersey.',
+                'timeline.polyu.title': 'The Hong Kong Polytechnic University · Hong Kong',
+                'timeline.polyu.role': 'Intelligent Systems Design · MA',
+                'timeline.polyu.period': 'Sep 2025 - Present',
+                'timeline.polyu.detail': 'Continuing research into intelligent systems, interaction experiences, and future-facing product-service design.',
+                'contact.heading': 'Contact Me',
+                'contact.resume': 'Resume',
+                'contact.email': 'Email',
+                'contact.wechat': 'WeChat',
+                'contact.boss': 'BOSS Zhipin',
+                'contact.linkedin': 'LinkedIn',
+                'copy.toast': 'Copied'
+            }
+        };
+
+        const setupLanguage = () => {
+            const buttons = document.querySelectorAll('[data-lang]');
+            const isPageReload = () => {
+                return window.__portfolioIsReload === true;
+            };
+            const resetScrollOnReload = () => {
+                if (!isPageReload()) return;
+
+                const scrollTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+                scrollTop();
+                requestAnimationFrame(scrollTop);
+                window.setTimeout(scrollTop, 0);
+                window.setTimeout(scrollTop, 80);
+                window.addEventListener('load', scrollTop, { once: true });
+                window.addEventListener('pageshow', scrollTop, { once: true });
+            };
+            const getSavedLanguage = () => {
+                if (isPageReload()) {
+                    localStorage.setItem('portfolio-language', 'zh');
+                    window.history.replaceState(null, '', window.location.pathname);
+                    resetScrollOnReload();
+                    return 'zh';
+                }
+                const urlLanguage = new URLSearchParams(window.location.search).get('lang');
+                if (urlLanguage === 'en' || urlLanguage === 'zh') return urlLanguage;
+                return 'zh';
+            };
+            const updateProjectLinks = (language) => {
+                document.querySelectorAll('.project-card[href]').forEach((link) => {
+                    const url = new URL(link.getAttribute('href'), window.location.href);
+                    url.searchParams.set('lang', language);
+                    link.setAttribute('href', `${url.pathname.split('/').pop()}${url.search}`);
+                });
+            };
+            const updateResumeLink = (language) => {
+                const resumeLink = document.querySelector('[data-resume-link]');
+                if (!resumeLink) return;
+
+                const file = language === 'zh' ? '中文简历.docx' : 'YuxiZhao Resume.docx';
+                resumeLink.href = file;
+                resumeLink.download = file;
+            };
+            const setLanguage = (language) => {
+                document.querySelectorAll('[data-i18n]').forEach((element) => {
+                    const key = element.dataset.i18n;
+                    element.textContent = translations[language][key];
+                });
+                document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+                    const key = element.dataset.i18nHtml;
+                    element.innerHTML = translations[language][key];
+                });
+                buttons.forEach((button) => {
+                    const isActive = button.dataset.lang === language;
+                    button.classList.toggle('is-active', isActive);
+                    button.setAttribute('aria-pressed', String(isActive));
+                });
+                document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+                localStorage.setItem('portfolio-language', language);
+                updateProjectLinks(language);
+                updateResumeLink(language);
+            };
+
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => setLanguage(button.dataset.lang));
+            });
+
+            setLanguage(getSavedLanguage());
+            resetScrollOnReload();
+        };
+
+        setupLanguage();
+
+        const setupTimeline = () => {
+            const about = document.querySelector('#about');
+            const timeline = document.querySelector('[data-timeline]');
+            const prevButton = document.querySelector('[data-timeline-prev]');
+            const nextButton = document.querySelector('[data-timeline-next]');
+            const autoZones = document.querySelectorAll('[data-timeline-auto-zone]');
+            let autoScrollId = null;
+
+            if (!about || !timeline || !prevButton || !nextButton) return;
+
+            const maxScroll = () => Math.max(0, timeline.scrollWidth - timeline.clientWidth);
+            const updateButtons = () => {
+                const atStart = timeline.scrollLeft <= 4;
+                const atEnd = timeline.scrollLeft >= maxScroll() - 4;
+                prevButton.classList.toggle('is-disabled', atStart);
+                nextButton.classList.toggle('is-disabled', atEnd);
+            };
+            const scrollByPage = (direction) => {
+                const atStart = timeline.scrollLeft <= 4;
+                const atEnd = timeline.scrollLeft >= maxScroll() - 4;
+
+                if (direction < 0 && atStart) {
+                    return;
+                }
+
+                if (direction > 0 && atEnd) {
+                    return;
+                }
+
+                timeline.scrollBy({ left: direction * timeline.clientWidth * 0.78, behavior: 'smooth' });
+            };
+
+            prevButton.addEventListener('click', () => scrollByPage(-1));
+            nextButton.addEventListener('click', () => scrollByPage(1));
+            timeline.addEventListener('scroll', updateButtons);
+            window.addEventListener('resize', updateButtons);
+
+            autoZones.forEach((zone) => {
+                zone.addEventListener('mouseenter', () => {
+                    const direction = Number(zone.dataset.direction);
+                    window.clearInterval(autoScrollId);
+                    autoScrollId = window.setInterval(() => {
+                        const atStart = timeline.scrollLeft <= 4;
+                        const atEnd = timeline.scrollLeft >= maxScroll() - 4;
+
+                        if ((direction < 0 && atStart) || (direction > 0 && atEnd)) {
+                            window.clearInterval(autoScrollId);
+                            updateButtons();
+                            return;
+                        }
+
+                        timeline.scrollLeft += direction * 6;
+                        updateButtons();
+                    }, 16);
+                });
+                zone.addEventListener('mouseleave', () => window.clearInterval(autoScrollId));
+            });
+
+            const aboutObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        timeline.scrollTo({ left: 0, behavior: 'auto' });
+                        updateButtons();
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            aboutObserver.observe(about);
+            updateButtons();
+        };
+
+        setupTimeline();
+
+        const setupCopyButtons = () => {
+            const copyButtons = document.querySelectorAll('[data-copy-email], [data-copy-text]');
+            const toast = document.querySelector('[data-copy-toast]');
+            let toastTimer = null;
+
+            if (!copyButtons.length || !toast) return;
+
+            const showToast = () => {
+                window.clearTimeout(toastTimer);
+                toast.classList.add('is-visible');
+                toastTimer = window.setTimeout(() => {
+                    toast.classList.remove('is-visible');
+                }, 1600);
+            };
+
+            copyButtons.forEach((button) => {
+                button.addEventListener('click', async () => {
+                    const value = button.dataset.copyEmail || button.dataset.copyText;
+
+                    try {
+                        await navigator.clipboard.writeText(value);
+                    } catch (error) {
+                        const input = document.createElement('input');
+                        input.value = value;
+                        document.body.appendChild(input);
+                        input.select();
+                        document.execCommand('copy');
+                        input.remove();
+                    }
+
+                    showToast();
+                });
+            });
+        };
+
+        setupCopyButtons();
+    </script>
+
+</body>
+</html>
