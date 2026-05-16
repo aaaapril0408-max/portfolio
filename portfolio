@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhai Yuxi · April | Portfolio</title>
+    <title>Zhao Yuxi · April | Portfolio</title>
     <script>
         const portfolioNavigation = performance.getEntriesByType('navigation')[0];
         window.__portfolioIsReload = portfolioNavigation ? portfolioNavigation.type === 'reload' : performance.navigation?.type === 1;
@@ -141,7 +141,7 @@
 
     <nav class="fixed top-0 w-full z-50 bg-transparent backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-8 py-8 flex justify-between items-center">
-            <a href="#home" class="text-lg font-medium tracking-tighter">Zhai Yuxi · April</a>
+            <a href="#home" class="text-lg font-medium tracking-tighter">Zhao Yuxi · April</a>
             <div class="flex items-center space-x-10">
                 <div class="flex space-x-10">
                     <a href="#home" class="nav-link" data-i18n="nav.home">Home</a>
