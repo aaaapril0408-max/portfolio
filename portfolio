@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Portfolio | Elizabeth Lin Style</title>
+    <title>Zhai Yuxi · April | Portfolio</title>
     <script>
         const portfolioNavigation = performance.getEntriesByType('navigation')[0];
         window.__portfolioIsReload = portfolioNavigation ? portfolioNavigation.type === 'reload' : performance.navigation?.type === 1;
