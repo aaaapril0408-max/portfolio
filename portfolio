@@ -417,7 +417,7 @@
     <footer class="py-20 px-8 text-center">
         <h2 class="text-3xl font-light tracking-[0.16em] text-gray-400 mb-8" data-i18n="contact.heading">和我联系</h2>
         <div class="flex justify-center space-x-14 mb-8">
-            <a href="中文简历.docx" class="nav-link" data-resume-link data-i18n="contact.resume" download="中文简历.docx">Resume</a>
+            <a href="赵禹喜中文简历.pdf" class="nav-link" data-resume-link data-i18n="contact.resume" download="赵禹喜中文简历.pdf">Resume</a>
             <button type="button" class="nav-link" data-copy-email="aaaapril0408@gmail.com" data-i18n="contact.email">Email</button>
             <button type="button" class="nav-link" data-copy-text="A3155777April_" data-i18n="contact.wechat">微信</button>
             <a href="https://m.zhipin.com/mpa/html/resume-detail?sid=self&securityId=9ZDskJaxMvUJu-r1CrJSdesEu7koujz8Lm5qDAAj3snpWpycpnQDSF1xtxR-er2xOCGGNX3Jrte0m1jw7VMqyNu8yfe06IlyEYJgysR3gLk-k3RWI8Vk5kTnkt7GLuctaqV6T0Bz5mK94PzvwKsxt2ortsrjcP-Q3-ew" class="nav-link" data-i18n="contact.boss" target="_blank" rel="noopener noreferrer">BOSS直聘</a>
@@ -670,7 +670,7 @@
                 const resumeLink = document.querySelector('[data-resume-link]');
                 if (!resumeLink) return;
 
-                const file = language === 'zh' ? '中文简历.docx' : 'YuxiZhao Resume.docx';
+                const file = language === 'zh' ? '赵禹喜中文简历.pdf' : 'YuxiZhao Resume.pdf';
                 resumeLink.href = file;
                 resumeLink.download = file;
             };
